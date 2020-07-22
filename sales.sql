@@ -54,6 +54,7 @@ create table yo (
  /** It deletes the entire table data very careful while deleting the rows and colums **/
  delete from yo;
  
+ /** limit functionality will return results upto the limit we mention */
  select * from sales limit 10;
  select * from sales where country = 'india' limit 10;
  
@@ -81,10 +82,45 @@ select * from sales where country like '_a%'; /** finds the values where a has s
 select * from sales where country like '____a%'; /** '__' is the number of spaces where the character postioned and want to search in table*/
 select * from sales where country like 'a___%'; /** 'a__%' letter starts with a and has minimum two character */
 select * from sales where country like 'c%a'; /** it returns the value starts with c and ends with a */
-select * from sales where country rlike '^.*[aeiou]$'; /** regex expression starting with these letters and ending with these letters*/
+
+/** some of the soultions are not working as excepted need to reverify again */
+/** regex expression starting with these letters and ending with these letters*/
+select * from sales where country rlike '^.*[aeiou]$';
 select * from sales where country rlike '^[abc].*[abc]$';
-select * from sales where country not rlike '^[aeiou]'; /** not starts with these character in records */
-select * from sales where country not regexp '^[aeiou]';
+select * from sales where country not rlike '^[aeiouAEIOU].*[aeiouAEIOU]$'; /** not starts with these character in records */
+select * from sales where country not regexp '^[aeiou]' order by city asc;
+
+alter table sales add column numbers int not null;
+
+select  min(country), length(min(country)) from sales order by country asc;
+
+select length(min(country)), min(country) from sales order by country asc limit 1;
+select  min(country) from sales where country = length(country) ;
+/** to count out the record length */
+select  length(max(country)) from sales;
+
+Select country,char_LENGTH(country) from sales Order By Length(country), country asc limit 4; 
+Select City,char_LENGTH(City) from Station Order By Length(City) desc, City desc limit 1;
+
+select id from sales where id > 2 and id < 7;
+
+/** round is function to round of the decimal value, it is 0 then no decimal, if it is 3 then .000 */
+select round(sum(id),4) from sales where id > 2 and id < 7;
+select max(id) from sales where id < 5;
+
+select id from sales where country = 'india' order by country desc limit 3;
+
+select country, count(country) from sales;
+
+select max(unitssold), UnitCost * UnitPrice as price, count(UnitsSold) from sales where unitssold * unitprice;
+select * from sales where max(unitssold);
+
+/** in statement is used for multiple values selection in the where clause */
+select * from sales where UnitsSold in (select max(UnitsSold) from sales) = 1;
+select UnitPrice as price from sales where UnitsSold in (select max(UnitsSold) from sales);
+
+/** between statements used to select the range between two of them */
+select country from sales where id between '2' and '5';
 
 
 
