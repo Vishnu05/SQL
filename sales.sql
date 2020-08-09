@@ -121,11 +121,54 @@ select UnitPrice as price from sales where UnitsSold in (select max(UnitsSold) f
 
 /** between statements used to select the range between two of them */
 select country from sales where id between '2' and '5';
+select * from sales where UnitPrice between '10' and '100';
+select * from sales where unitprice not between '10' and '100';
+select * from sales where country not between 'india' and 'india';
+select * from sales where country = 'india';
+
+/** alias */
+select country as FromCountry from sales;
+
+/** joins */ 
+select country as table1 from sales inner join million on sales.Country = million.Country;
+
+/** unions, union - distinct values, union all - duplicate vales */
+select country as country_from_sales from sales union select country as country_form_million from million;
+select region from sales union all select region from million;
+select distinct country from sales;
+select region, country from sales where region = 'asia' union select region, country from million where region = 'europe';
+
+select * from sales inner join million on sales.country = million.country;
+
+create table join1 (
+id int primary key not null , 
+namee varchar(255) not null, 
+age int not null);
+
+create table join2 (
+	empid int auto_increment primary key not null,
+    empname varchar(255),
+    location varchar(255)
+    );
+    
+select * from join1;
+select * from join2;
+
+/** joins */ 
+/** select * form table1 join table2 on table1.columnname = table2.columnname */
+select * from join1 join join2 on join1.id = join2.empid;
+select * from join1 inner join join2 on join1.id = join2.empid;
+select * from join1 join sales on join1.id = sales.Country;
+select * from join1 left join  join2 on join1.id = join2.empid;
+-- select * from join1 full join join2 on join1.id = join2.empid;
+select * from join1, join2 where id = 1;
+
+select * from join1 union select * from interview; 
 
 
 
 select * from sales;
 
-
+create schema blog;
 
 
